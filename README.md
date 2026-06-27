@@ -1,110 +1,115 @@
-# 📋 Clipboard Indicator
+# Emoji Indicator
 
-[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/eb9af9a1c6f04eb060cb01de6aeb5c84232cd8c0/get-it-on-ego.svg?sanitize=true" width="180" alt="Get it on GNOME Extensions">](https://extensions.gnome.org/extension/779/clipboard-indicator/)
+Emoji Indicator is a GNOME Shell extension that puts a fast, searchable emoji
+picker in the top bar.
 
+Open it from the panel icon or with a keyboard shortcut, search or browse by
+category, and pick an emoji to copy and paste it into the focused app.
 
+## Features
 
-The most popular, reliable and feature-rich clipboard manager for GNOME with
-over **2M** downloads.
+- Top-bar emoji picker for GNOME Shell
+- Keyboard shortcut support, defaulting to `Super+Period` and `Ctrl+Period`
+- Search across emoji glyphs, Unicode names, categories, subcategories, and keywords
+- Category browsing for faces, people, nature, food, places, activities, objects, symbols, and flags
+- Recent and favorite emoji sections
+- Right-click or press `p` to favorite an emoji
+- Configurable popup width, UI scale, and visible emoji count
+- Optional open-at-cursor behavior for shortcut launches
+- Vendored Unicode Emoji 17.0 data for offline use
 
-<img src="./screenshot.png" width="400" alt="A screenshot of the clipboard manager, showing clipboard history including images">
+## Install From Source
 
-This extension is also packaged by the community for many popular Linux distros
-— search your package manager.
-
-## 🧰 Features
-
-* **Image support** — Copy and paste images in addition to text
-* **Pin items** — Keep important clipboard entries at the top of the menu
-* **Search** — Find clipboard entries with text search, including regex
-* **Edit entries** — Modify existing text entries
-* **Tag entries** — Add custom labels to organize your clipboard
-* **Keyboard shortcuts** — Open/close menu, cycle through entries and activate actions without touching the mouse
-* **Auto-clear history** — Schedule automatic clipboard cleanup at regular intervals or at boot time
-* **Private mode** — Temporarily pause clipboard history when working with sensitive data
-* **Exclude apps** — Prevent clipboard tracking when specific applications are in focus (e.g., password managers)
-* **Highly configurable** — Many more settings to control UI & behavior
-
-### In-Menu Keyboard Controls
-
-- Use arrows to navigate
-- `<Enter>` to select an item
-- `<Delete>` to delete an item
-- `v` to paste directly from menu
-- `p` to pin item
-- `t` to add a tag
-- `h` to preview image
-- `e` to edit entry
-
-### Terminal support
-
-Pasting from the menu works by sending Shift+Insert to programs or Ctrl+Shift+Insert to terminals.
-
-- To use with tmux, add this to your `.tmux.conf`:
-
-  ```bash
-  # Add Ctrl Shift Insert to paste for clipboard-indicator
-  bind -T root C-S-IC {
-    run "tmux send-key \"$(xclip -d ${DISPLAY} -o -selection clipboard)\""
-  }
-  ```
-
-- To use with Ghostty, add this to your `.config/ghostty/config`:
-
-  ```bash
-  # Add Ctrl Shift Insert to paste for clipboard-indicator
-  keybind = ctrl+shift+insert=paste_from_clipboard
-  ```
-
-### Known issues
-
-- Copying large images causes a short freeze
-- Pasting via menu doesn't work for every application
-
-## 📦 Install from source
-
-Installation via git is performed by cloning the repo into your local gnome-shell extensions directory (usually `~/.local/share/gnome-shell/extensions/`):
+Clone the repository into any working directory, then run:
 
 ```bash
-$ git clone https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git <extensions-dir>/clipboard-indicator@tudmotu.com
+make install
+gnome-extensions enable emoji-indicator@kaustubhismyname
 ```
 
-After cloning the repo, the extension is practically installed yet disabled. In order to enable it, run the following command:
+If GNOME Shell has already loaded an older copy of the extension, log out and
+back in after installing.
+
+## Requirements
+
+Runtime:
+
+- GNOME Shell 46 or newer
+
+Build and install tools:
+
+- `make`
+- `glib-compile-schemas`
+- `gnome-extensions`
+
+Optional development/package tools:
+
+- `zip`, used by `make bundle`
+- `dbus-run-session` and `gnome-shell`, used by `make nested-session`
+
+Package names vary by distribution. On Fedora, the required tools are typically
+provided by `make`, `glib2`, and `gnome-shell`. On Ubuntu/Debian, install
+`make`, `libglib2.0-bin`, and `gnome-shell`; install `zip` if you want to build
+a distributable bundle.
+
+## Usage
+
+- Click the panel icon to open the picker.
+- Use `Super+Period` or `Ctrl+Period` to open or close it from the keyboard.
+- Type in the search field to search all emoji.
+- Click a category chip to browse that category.
+- Click an emoji or press `Enter` on a focused emoji to paste it.
+- Right-click an emoji, or press `p` on a focused emoji, to toggle favorite.
+- Press `/` from the emoji grid to return focus to search.
+
+Selecting an emoji closes the picker, copies the emoji to the clipboard, and
+sends a paste keypress to the focused app.
+
+## Settings
+
+Open the extension preferences from GNOME Extensions or from the Settings row in
+the picker.
+
+Available settings include:
+
+- Open picker at cursor
+- Recent emoji limit
+- Show or hide favorites and recents
+- Visible emoji limit
+- Popup width
+- UI scale
+- Keyboard shortcut bindings
+
+## Development
+
+Useful commands:
 
 ```bash
-$ gnome-extensions enable clipboard-indicator@tudmotu.com
+make all
+make install
+gnome-extensions disable emoji-indicator@kaustubhismyname
+gnome-extensions enable emoji-indicator@kaustubhismyname
 ```
 
-## ✅ GNOME Version Support
+Package the extension with:
 
-Depending on your GNOME version, you will need to install the following
-Clipboard Indicator versions:
+```bash
+gnome-extensions pack --force \
+  --extra-source=constants.js \
+  --extra-source=keyboard.js \
+  --extra-source=emojiData.js \
+  --schema=schemas/org.gnome.shell.extensions.emoji-indicator.gschema.xml .
+```
 
-* GNOME 46 and above:
-  * Use latest version
-* GNOME 45:
-  * v57
-* GNOME 42-44
-  * v47
-* GNOME 40-41
-  * v39
-* GNOME <40
-  * v37
+## Background
 
-## ⌨️ Contributing
+Emoji Indicator started as a fork of
+[Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator).
+The panel indicator, shortcut handling, and paste workflow were useful starting
+points, but the extension has been rebuilt around emoji search, categories,
+recents, and favorites instead of clipboard history.
 
-Contributions to this project are welcome.
+## License
 
-Please follow these guidelines when contributing:
-
-- If you want to contribute code, your best bet is to look for an issue with the label "Up for grabs"
-- DO NOT open unsolicited PRs unless they are for updating translations
-- Look at the list of previous PRs before you open a PR, if your PR conflicts with another, it will be rejected
-- If you have a feature idea, open an issue and discuss it there before implementing. DO NOT open a PR as a platform for discussion
-
-### Release Cycle
-
-This project loosely follows the release cycle of GNOME. That means it will
-usually receive 2 updates a year, close to the release of a new major GNOME
-version. If there are features you'd like to implement or suggest, it is advised
-to start the discussion a month or two before a GNOME release.
+This project keeps the upstream license from Clipboard Indicator. See
+[LICENSE.rst](./LICENSE.rst).

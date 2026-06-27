@@ -1,99 +1,89 @@
-.clipboard-indicator-hbox.private-mode {
-    color: rgba(255,255,255,0.3);
+.emoji-indicator-hbox {
+    spacing: 4px;
 }
 
-.ci-notification-label {
+.emoji-search-entry {
+    min-width: 374px;
+}
+
+.emoji-section-label-item {
+    padding: 8px 12px 2px 12px;
+}
+
+.emoji-section-label {
     font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(10,10,10,0.7);
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.emoji-actor-wrapper {
+    padding: 0;
+}
+
+.emoji-scroll-view {
+    max-height: 390px;
+    min-width: 374px;
+}
+
+.emoji-category-bar {
+    padding: 6px 8px 4px 8px;
+    spacing: 4px;
+}
+
+.emoji-category-row {
+    spacing: 4px;
+}
+
+.emoji-category-button {
     border-radius: 6px;
-    font-size:2em;
-    padding:.5em;
-    width:400px;
+    padding: 5px 8px;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
-.ci-history-menu-section .popup-menu-item {
-    margin-right: .8em;
+.emoji-category-button:hover,
+.emoji-category-button:focus {
+    background-color: rgba(255, 255, 255, 0.14);
 }
 
-.popup-menu-item .ci-action-btn StIcon {
-    icon-size:1.2em;
-    margin-left:.25em;
+.emoji-category-button-selected {
+    background-color: rgba(255, 255, 255, 0.20);
 }
 
-.popup-menu-item StEntry StIcon {
-    icon-size:1em;
-    margin:0 .25em;
+.emoji-grid {
+    padding: 6px 8px 10px 8px;
+    spacing: 4px;
 }
 
-.clipboard-indicator-empty-state {
-    width:350px;
-    color:#aaa;
+.emoji-grid-row {
+    spacing: 4px;
 }
 
-.clipboard-indicator-empty-state StIcon {
-    icon-size:5em;
-    margin-top:3em;
+.emoji-button {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    padding: 0;
 }
 
-.clipboard-indicator-empty-state StLabel {
-    margin:1em 0 3em 0;
+.emoji-button:hover,
+.emoji-button:focus {
+    background-color: rgba(255, 255, 255, 0.14);
 }
 
-.ci-history-menu-section {
-    max-height:450px;
+.emoji-button-favorite {
+    background-color: rgba(246, 211, 101, 0.16);
 }
 
-.ci-main-menu-section StButton.ci-pin-btn {
-    color: rgba(255,255,255,0.3);
+.emoji-glyph {
+    font-size: 24px;
+    text-align: center;
 }
 
-.clipboard-hidden {
-    display:none!important;
+.emoji-glyph-compact {
+    font-size: 22px;
 }
 
-.clipboard-menu-icon {
-    width:1em;
-    height:1em;
-    margin-right:.5em;
-}
-
-.clipboard-menu-img-preview {
-    border:solid 1px white;
-    overflow:hidden;
-    width:1.5em;
-    height:1.5em;
-    margin:0;
-    padding:0;
-}
-
-.clipboard-indicator-img-preview {
-    border:solid 1px white;
-    width:1em;
-    height:1em;
-    margin-right:.25em;
-}
-
-.clipboard-indicator-hbox {
-    transition: background-color 150ms ease-in-out;
-}
-
-.clipboard-indicator-hbox .clipboard-indicator-icon {
-    transition: color 150ms ease-in-out;
-}
-
-.ci-tag-label {
-    font-size: 0.8em;
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 1px 6px;
-    margin: 0 6px;
-}
-
-.ci-edit-textbox {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    padding: 8px;
-    min-width: 384px;
+.emoji-empty-label {
+    padding: 14px;
+    color: rgba(255, 255, 255, 0.62);
 }

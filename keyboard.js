@@ -21,7 +21,7 @@ export class Keyboard {
 
     #notify (key, state) {
         this.#device.notify_keyval(
-            Clutter.get_current_event_time() * 1000,
+            Clutter.get_current_event_time(),
             key,
             state
         );

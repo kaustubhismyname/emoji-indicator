@@ -1,0 +1,64 @@
+<schemalist gettext-domain="emoji-indicator">
+    <schema id="org.gnome.shell.extensions.emoji-indicator"
+        path="/org/gnome/shell/extensions/emoji-indicator/">
+
+        <key name="enable-keybindings" type="b">
+            <default>true</default>
+            <summary>Enable keyboard shortcuts</summary>
+        </key>
+
+        <key name="toggle-picker" type="as">
+            <default><![CDATA[['<Super>period', '<Control>period']]]></default>
+            <summary>Open or close the emoji picker</summary>
+        </key>
+
+        <key name="open-at-cursor" type="b">
+            <default>false</default>
+            <summary>Open picker at cursor position</summary>
+        </key>
+
+        <key name="recent-limit" type="i">
+            <default>30</default>
+            <summary>Number of recent emojis to remember</summary>
+            <range min="1" max="200"/>
+        </key>
+
+        <key name="visible-emoji-limit" type="i">
+            <default>160</default>
+            <summary>Maximum number of emoji buttons to render at once</summary>
+            <range min="40" max="500"/>
+        </key>
+
+        <key name="popup-width" type="i">
+            <default>374</default>
+            <summary>Picker popup width in pixels</summary>
+            <range min="300" max="700"/>
+        </key>
+
+        <key name="ui-scale" type="i">
+            <default>100</default>
+            <summary>Picker UI scale percentage</summary>
+            <range min="75" max="150"/>
+        </key>
+
+        <key name="favorites" type="as">
+            <default>[]</default>
+            <summary>Favorite emoji list</summary>
+        </key>
+
+        <key name="recents" type="as">
+            <default>[]</default>
+            <summary>Recently used emoji list</summary>
+        </key>
+
+        <key name="show-favorites" type="b">
+            <default>true</default>
+            <summary>Show favorite emojis</summary>
+        </key>
+
+        <key name="show-recents" type="b">
+            <default>true</default>
+            <summary>Show recent emojis</summary>
+        </key>
+    </schema>
+</schemalist>

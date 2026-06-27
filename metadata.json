@@ -6,10 +6,10 @@
         "49",
         "50"
     ],
-    "uuid": "clipboard-indicator@tudmotu.com",
-    "name": "Clipboard Indicator",
-    "description": "The most popular clipboard manager for GNOME, with over 1M downloads",
-    "url": "https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator",
-    "gettext-domain": "clipboard-indicator",
-    "settings-schema": "org.gnome.shell.extensions.clipboard-indicator"
+    "uuid": "emoji-indicator@kaustubhismyname",
+    "name": "Emoji Indicator",
+    "description": "A searchable emoji picker for GNOME Shell",
+    "url": "https://github.com/kaustubhismyname/gnome-shell-extension-clipboard-indicator",
+    "gettext-domain": "emoji-indicator",
+    "settings-schema": "org.gnome.shell.extensions.emoji-indicator"
 }
