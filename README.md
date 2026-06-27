@@ -6,6 +6,8 @@ picker in the top bar.
 Open it from the panel icon or with a keyboard shortcut, search or browse by
 category, and pick an emoji to copy and paste it into the focused app.
 
+![Emoji Indicator picker showing search, categories, recents, and emoji results](./screenshot.png)
+
 ## Features
 
 - Top-bar emoji picker for GNOME Shell
