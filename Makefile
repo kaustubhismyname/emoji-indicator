@@ -1,6 +1,7 @@
 UUID = emoji-indicator@kaustubhismyname
 INSTALLPATH = $(HOME)/.local/share/gnome-shell/extensions/$(UUID)/
 MODULES = extension.js prefs.js constants.js keyboard.js emojiData.js metadata.json stylesheet.css LICENSE.rst README.md schemas/
+UPLOAD_ZIP = $(UUID).shell-extension.zip
 
 all: compile-settings
 
@@ -18,4 +19,9 @@ nested-session:
 		MUTTER_DEBUG_DUMMY_MONITOR_SCALES=2 gnome-shell --nested --wayland
 
 bundle: all
-	zip -FSr bundle.zip $(MODULES)
+	rm -f $(UPLOAD_ZIP)
+	gnome-extensions pack --force \
+		--extra-source=constants.js \
+		--extra-source=keyboard.js \
+		--extra-source=emojiData.js \
+		--schema=schemas/org.gnome.shell.extensions.emoji-indicator.gschema.xml .

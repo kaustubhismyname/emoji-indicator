@@ -1,15 +1,14 @@
 {
     "shell-version": [
-        "46",
-        "47",
-        "48",
-        "49",
         "50"
     ],
     "uuid": "emoji-indicator@kaustubhismyname",
     "name": "Emoji Indicator",
     "description": "A searchable emoji picker for GNOME Shell",
-    "url": "https://github.com/kaustubhismyname/gnome-shell-extension-clipboard-indicator",
+    "url": "https://github.com/kaustubhismyname/emoji-indicator",
+    "donations": {
+        "github": "kaustubhismyname"
+    },
     "gettext-domain": "emoji-indicator",
     "settings-schema": "org.gnome.shell.extensions.emoji-indicator"
 }

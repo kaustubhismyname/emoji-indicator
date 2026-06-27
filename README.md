@@ -34,7 +34,7 @@ back in after installing.
 
 Runtime:
 
-- GNOME Shell 46 or newer
+- GNOME Shell 50
 
 Build and install tools:
 
@@ -44,13 +44,11 @@ Build and install tools:
 
 Optional development/package tools:
 
-- `zip`, used by `make bundle`
 - `dbus-run-session` and `gnome-shell`, used by `make nested-session`
 
 Package names vary by distribution. On Fedora, the required tools are typically
 provided by `make`, `glib2`, and `gnome-shell`. On Ubuntu/Debian, install
-`make`, `libglib2.0-bin`, and `gnome-shell`; install `zip` if you want to build
-a distributable bundle.
+`make`, `libglib2.0-bin`, and `gnome-shell`.
 
 ## Usage
 
@@ -91,14 +89,10 @@ gnome-extensions disable emoji-indicator@kaustubhismyname
 gnome-extensions enable emoji-indicator@kaustubhismyname
 ```
 
-Package the extension with:
+Build the upload ZIP with:
 
 ```bash
-gnome-extensions pack --force \
-  --extra-source=constants.js \
-  --extra-source=keyboard.js \
-  --extra-source=emojiData.js \
-  --schema=schemas/org.gnome.shell.extensions.emoji-indicator.gschema.xml .
+make bundle
 ```
 
 ## Background

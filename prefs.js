@@ -1,6 +1,7 @@
 import Adw from 'gi://Adw';
 import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
+import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
 import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
@@ -12,6 +13,10 @@ export default class EmojiIndicatorPreferences extends ExtensionPreferences {
         const ui = new SettingsUI(settings);
 
         window.set_default_size(640, 520);
+        window.connect('close-request', () => {
+            ui.cleanup();
+            return false;
+        });
 
         const behaviorPage = new Adw.PreferencesPage({
             title: _('Behavior'),
@@ -34,6 +39,8 @@ export default class EmojiIndicatorPreferences extends ExtensionPreferences {
 class SettingsUI {
     constructor (settings) {
         this.settings = settings;
+        this._signals = [];
+        this._controllers = [];
 
         this.behaviorGroup = new Adw.PreferencesGroup({
             title: _('Paste Behavior'),
@@ -139,7 +146,7 @@ class SettingsUI {
 
         setLabelFromSettings();
 
-        button.connect('clicked', () => {
+        this._connect(button, 'clicked', () => {
             if (button._editing) {
                 button.set_label(button._previousLabel);
                 button._editing = false;
@@ -152,6 +159,7 @@ class SettingsUI {
 
             const controller = new Gtk.EventControllerKey();
             button.add_controller(controller);
+            this._controllers.push([button, controller]);
             let handlerId = 0;
 
             const stopEditing = () => {
@@ -160,9 +168,10 @@ class SettingsUI {
                 if (handlerId)
                     controller.disconnect(handlerId);
                 button.remove_controller(controller);
+                this._controllers = this._controllers.filter(([, item]) => item !== controller);
             };
 
-            handlerId = controller.connect('key-pressed', (_controller, keyval, _keycode, mask) => {
+            handlerId = this._connect(controller, 'key-pressed', (_controller, keyval, _keycode, mask) => {
                 mask = mask & Gtk.accelerator_get_default_mod_mask();
 
                 if (keyval === Gdk.KEY_Escape) {
@@ -187,5 +196,26 @@ class SettingsUI {
         });
 
         return button;
+    }
+
+    _connect (object, signal, callback) {
+        const id = object.connect(signal, callback);
+        this._signals.push([object, id]);
+        return id;
+    }
+
+    cleanup () {
+        for (const [object, id] of this._signals.splice(0)) {
+            if (GObject.signal_handler_is_connected(object, id))
+                object.disconnect(id);
+        }
+
+        for (const [button, controller] of this._controllers.splice(0)) {
+            try {
+                button.remove_controller(controller);
+            } catch (e) {
+                // Controller may already have been removed after shortcut capture.
+            }
+        }
     }
 }

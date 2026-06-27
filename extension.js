@@ -56,7 +56,6 @@ const EmojiIndicator = GObject.registerClass({
         this.keyboard = new Keyboard();
         this.menu.sourceActor = this;
         this._shortcutsBindingIds = [];
-        this._settingsChangedId = null;
         this._pasteTimeouts = [];
         this._searchTimeoutId = null;
         this._visibleEmojiButtonsList = [];
@@ -78,10 +77,9 @@ const EmojiIndicator = GObject.registerClass({
     destroy () {
         this._unbindShortcuts();
 
-        if (this._settingsChangedId) {
-            this.extension.settings.disconnect(this._settingsChangedId);
-            this._settingsChangedId = null;
-        }
+        this.extension.settings.disconnectObject(this);
+        this.menu.disconnectObject(this);
+        this.searchEntry.get_clutter_text().disconnectObject(this);
 
         this._pasteTimeouts.forEach(id => clearTimeout(id));
         this._pasteTimeouts = [];
@@ -116,7 +114,7 @@ const EmojiIndicator = GObject.registerClass({
     }
 
     _bindSettings () {
-        this._settingsChangedId = this.extension.settings.connect('changed', () => {
+        this.extension.settings.connectObject('changed', () => {
             this._loadSettings();
 
             if (this.enableKeybindings)
@@ -127,7 +125,7 @@ const EmojiIndicator = GObject.registerClass({
             this._refreshDynamicSections();
             this._applyLayoutSettings();
             this._queueEmojiFilter(this.searchEntry.get_text());
-        });
+        }, this);
 
         if (this.enableKeybindings)
             this._bindShortcuts();
@@ -160,10 +158,10 @@ const EmojiIndicator = GObject.registerClass({
             x_expand: true,
             primary_icon: new St.Icon({ icon_name: 'edit-find-symbolic' }),
         });
-        this.searchEntry.get_clutter_text().connect('text-changed', () => {
+        this.searchEntry.get_clutter_text().connectObject('text-changed', () => {
             this._queueEmojiFilter(this.searchEntry.get_text());
-        });
-        this.searchEntry.get_clutter_text().connect('key-press-event', (_actor, event) => {
+        }, this);
+        this.searchEntry.get_clutter_text().connectObject('key-press-event', (_actor, event) => {
             if (event.get_key_symbol() === Clutter.KEY_Down) {
                 const first = this._visibleEmojiButtons()[0];
                 if (first)
@@ -171,7 +169,7 @@ const EmojiIndicator = GObject.registerClass({
                 return Clutter.EVENT_STOP;
             }
             return Clutter.EVENT_PROPAGATE;
-        });
+        }, this);
         this.searchItem.add_child(this.searchEntry);
         this.menu.addMenuItem(this.searchItem);
 
@@ -209,13 +207,13 @@ const EmojiIndicator = GObject.registerClass({
             style_class: 'popup-menu-icon',
             y_align: Clutter.ActorAlign.CENTER,
         }), 0);
-        this.settingsItem.connect('activate', () => {
+        this.settingsItem.connectObject('activate', () => {
             this.extension.openSettings();
             this.menu.close();
-        });
+        }, this);
         this.menu.addMenuItem(this.settingsItem);
 
-        this.menu.connect('open-state-changed', (_menu, open) => {
+        this.menu.connectObject('open-state-changed', (_menu, open) => {
             if (open) {
                 const id = setTimeout(() => {
                     this.searchEntry.set_text('');
@@ -225,7 +223,7 @@ const EmojiIndicator = GObject.registerClass({
             } else {
                 this.menu.sourceActor = this;
             }
-        });
+        }, this);
 
         this._renderEmojiResults('');
         this._applyLayoutSettings();
@@ -283,7 +281,7 @@ const EmojiIndicator = GObject.registerClass({
                 label: CATEGORY_LABELS[category] || category,
                 accessible_name: category,
             });
-            button.connect('clicked', () => this._selectCategory(category));
+            button.connectObject('clicked', () => this._selectCategory(category), this);
             this._categoryButtons.set(category, button);
             row.add_child(button);
         });
@@ -383,15 +381,15 @@ const EmojiIndicator = GObject.registerClass({
         button._emojiEntry = entry;
         button._searchText = this._searchText(entry);
 
-        button.connect('clicked', () => this._pasteEmoji(entry));
-        button.connect('button-press-event', (_actor, event) => {
+        button.connectObject('clicked', () => this._pasteEmoji(entry), this);
+        button.connectObject('button-press-event', (_actor, event) => {
             if (event.get_button() === 3) {
                 this._toggleFavorite(entry.emoji);
                 return Clutter.EVENT_STOP;
             }
             return Clutter.EVENT_PROPAGATE;
-        });
-        button.connect('key-press-event', (_actor, event) => {
+        }, this);
+        button.connectObject('key-press-event', (_actor, event) => {
             switch (event.get_key_symbol()) {
                 case Clutter.KEY_Return:
                 case Clutter.KEY_KP_Enter:
@@ -405,7 +403,7 @@ const EmojiIndicator = GObject.registerClass({
                     return Clutter.EVENT_STOP;
             }
             return Clutter.EVENT_PROPAGATE;
-        });
+        }, this);
 
         return button;
     }
