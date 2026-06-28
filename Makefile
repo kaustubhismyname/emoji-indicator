@@ -8,6 +8,9 @@ all: compile-settings
 compile-settings:
 	glib-compile-schemas --strict --targetdir=schemas/ schemas
 
+emoji-data:
+	node scripts/generate-emoji-data.js
+
 install: all
 	rm -rf $(INSTALLPATH)
 	mkdir -p $(INSTALLPATH)
