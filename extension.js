@@ -32,7 +32,6 @@ const CATEGORY_LABELS = {
 export default class EmojiIndicatorExtension extends Extension {
     enable () {
         this.indicator = new EmojiIndicator({
-            clipboard: St.Clipboard.get_default(),
             settings: this.getSettings(),
             openSettings: this.openPreferences,
             uuid: this.uuid,
@@ -526,7 +525,9 @@ const EmojiIndicator = GObject.registerClass({
         if (this.menu.isOpen)
             this.menu.close();
 
-        this.extension.clipboard.set_text(CLIPBOARD_TYPE, entry.emoji);
+        // Clipboard access is limited to explicit emoji selection so the
+        // focused app can receive the emoji through the normal paste shortcut.
+        St.Clipboard.get_default().set_text(CLIPBOARD_TYPE, entry.emoji);
 
         this._setTimeout(() => {
             this._sendPasteKeys();

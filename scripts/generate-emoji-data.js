@@ -169,7 +169,7 @@ async function main() {
     const output = [
         `// Generated from ${EMOJI_TEST_URL} plus CLDR English annotations and gemoji aliases.`,
         `// Generated on ${generatedAt}. Do not edit by hand; run "make emoji-data".`,
-        `export const EMOJI_DATA = ${JSON.stringify(emoji)};`,
+        `export const EMOJI_DATA = ${JSON.stringify(emoji, null, 4)};`,
         '',
     ].join('\n');
 
