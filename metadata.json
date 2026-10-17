@@ -1,6 +1,7 @@
 {
     "shell-version": [
-        "50"
+        "50",
+        "51"
     ],
     "uuid": "emoji-indicator@kaustubhismyname",
     "name": "Emoji Indicator",
