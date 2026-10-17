@@ -254,14 +254,14 @@ const EmojiIndicator = GObject.registerClass({
 
     _createGrid () {
         return new St.BoxLayout({
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             style_class: 'emoji-grid',
         });
     }
 
     _buildCategoryBar () {
         const bar = new St.BoxLayout({
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             style_class: 'emoji-category-bar',
         });
 
